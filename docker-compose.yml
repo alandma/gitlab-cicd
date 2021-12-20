@@ -1,0 +1,33 @@
+version: "3.7"
+services: 
+  web:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: unless-stopped
+    hostname: 'localhost'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://meu.ip:8080'
+    ports:
+      - '8080:80'
+      - '443:443'
+      - '2222:22'
+    volumes:
+      - 'config-vol:/etc/gitlab'
+      # - 'logs-vol:/var/log/gitlab'
+      - 'data-vol:/var/opt/gitlab'
+  
+  # runner:
+  #   image: gitlab/gitlab-runner:latest
+  #   environment: 
+  #     TZ: America/Sao_Paulo
+  #   volumes: 
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /usr/bin/docker:/usr/bin/docker
+  #     - /usr/bin/docker-compose:/usr/bin/docker-compose
+  #     - gitlab-runner-config:/etc/gitlab-runner
+
+volumes: 
+  config-vol:
+  logs-vol:
+  data-vol:
+  gitlab-runner-config:
